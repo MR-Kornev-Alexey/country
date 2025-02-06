@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    env_file: .env
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  db:
+    image: postgres:17
+    restart: always
+    ports:
+      - "5435:5432" # Локальный порт 5434 будет перенаправляться на порт 5432 в контейнере
+    environment:
+      POSTGRES_USER: postgres # Переменные окружения задаются как ключ: значение
+      POSTGRES_PASSWORD: postgres_TR546g&!3()
+      POSTGRES_DB: postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data # Хранение данных для устойчивости при перезапуске контейнера
+
+volumes:
+  db_data:
