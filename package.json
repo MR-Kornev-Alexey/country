@@ -6,7 +6,7 @@
     "node": "20.x"
   },
   "workspaces": [
-    "country"
+    "services/*"
   ],
   "scripts": {
     "prepare": "yarn install && yarn workspaces foreach --all install && yarn workspaces focus --all && yarn workspaces foreach --all run prepare",
