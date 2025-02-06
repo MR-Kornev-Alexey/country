@@ -3,23 +3,27 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CountryEntity } from './entities/country.entity';
 import { CreateCountryDto } from './dto/create-country.dto';
+import {CountriesEntity} from "./entities/countries.entity";
 
 @Injectable()
 export class CountryService {
   constructor(
-      @InjectRepository(CountryEntity)
-      private countryRepository: Repository<CountryEntity>,
+      @InjectRepository(CountriesEntity)
+      private countryRepository: Repository<CountriesEntity>,
   ) {}
 
-  async saveSelected(createCountryDto: CreateCountryDto): Promise<CountryEntity> {
+  async getAllData(): Promise<CreateCountryDto[]> {
+    return await this.countryRepository.find();
+  }
+
+  async saveSelected(createCountryDto: CreateCountryDto): Promise<CreateCountryDto> {
     // Удаляем все записи в таблице
-    await this.countryRepository.clear();
-
-    // Создаём новый объект страны на основе DTO
-    const country = this.countryRepository.create(createCountryDto);
-
-    // Сохраняем новый объект в базу данных
-    return await this.countryRepository.save(country);
+    // await this.countryRepository.clear();
+    return CreateCountryDto
+    // const country = this.countryRepository.create(createCountryDto);
+    // console.log(country);
+    // // Сохраняем новый объект в базу данных
+    // return await this.countryRepository.save(country);
   }
 
   async findAll(): Promise<CountryEntity[]> {

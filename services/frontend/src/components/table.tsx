@@ -18,7 +18,7 @@ import {visuallyHidden} from '@mui/utils';
 import JSONRows from "../JSON/data-ru";
 import TableFooter from "@mui/material/TableFooter";
 import TablePaginationActions from "@/components/table-pagination-actions";
-import {Button, Stack} from "@mui/material";
+import {Button, Container, Stack} from "@mui/material";
 import {useEffect} from "react";
 
 interface Data {
@@ -60,32 +60,7 @@ interface HeadCell {
     numeric: boolean;
 }
 
-const headCells: readonly HeadCell[] = [
-    {
-        id: 'entity',
-        numeric: false,
-        disablePadding: true,
-        label: 'Страна',
-    },
-    {
-        id: 'currency',
-        numeric: true,
-        disablePadding: false,
-        label: 'Валюта',
-    },
-    {
-        id: 'numericCode',
-        numeric: true,
-        disablePadding: false,
-        label: 'Цифровой код',
-    },
-    {
-        id: 'alphabeticCode',
-        numeric: true,
-        disablePadding: false,
-        label: 'Алфавитный код',
-    },
-];
+
 
 interface EnhancedTableProps {
     numSelected: number;
@@ -94,17 +69,32 @@ interface EnhancedTableProps {
     order: Order;
     orderBy: string;
     rowCount: number;
+    countries: boolean;
 }
 
 
 function EnhancedTableHead(props: EnhancedTableProps) {
-    const {onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort} =
+    const {onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, countries} =
         props;
     const createSortHandler =
         (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
             onRequestSort(event, property);
         };
 
+    const headCells: readonly HeadCell[] = [
+        {
+            id: 'entity',
+            numeric: false,
+            disablePadding: true,
+            label: countries?'Страна': "Валюта",
+        },
+        {
+            id: 'currency',
+            numeric: true,
+            disablePadding: false,
+            label: countries?'Валюта': "Страна",
+        },
+    ];
     return (
         <TableHead>
             <TableRow>
@@ -187,14 +177,13 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
     );
 }
 
-export default function EnhancedTable({handleSendToApi, setRowsFofShowStart}) {
+export default function EnhancedTable({handleSendToApi, rows, countries}) {
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof Data>('currency');
     const [selected, setSelected] = React.useState<readonly number[]>([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
-    const  [rows, setRowsFofShow] = React.useState(JSONRows);
 
     const handleRequestSort = (
         event: React.MouseEvent<unknown>,
@@ -265,22 +254,10 @@ export default function EnhancedTable({handleSendToApi, setRowsFofShowStart}) {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
         [order, orderBy, page, rowsPerPage],
     );
-    const showOnlySelected =()=>{
-        const filteredData = JSONRows.filter(item => selected.includes(item.id));
-        setRowsFofShow(filteredData);
-    }
+
     return (
-        <Stack spacing={2}>
-             <Stack direction="row" spacing={2} flex justifyContent="space-around">
-                <Button sx={{width: 160}}  size="medium" variant="contained" onClick={()=>showOnlySelected()}>Выбранное</Button>
-                <Button sx={{width: 160}}  size="medium" variant="contained">
-                    страна+валюты
-                </Button>
-                <Button sx={{width: 160}}  size="medium" variant="contained" >
-                    валюта+страны
-                </Button>
-            </Stack>
-            <Box sx={{width: '100%'}}>
+        <Stack >
+             <Box sx={{width: '1000px'}}>
                 <Paper sx={{width: '100%', mb: 2}}>
                    <EnhancedTableToolbar numSelected={selected.length}/>
                     <TableContainer>
@@ -295,6 +272,7 @@ export default function EnhancedTable({handleSendToApi, setRowsFofShowStart}) {
                                 onSelectAllClick={handleSelectAllClick}
                                 onRequestSort={handleRequestSort}
                                 rowCount={rows.length}
+                                countries={countries}
                             />
                             <TableBody>
                                 {visibleRows.map((row, index) => {
@@ -333,8 +311,8 @@ export default function EnhancedTable({handleSendToApi, setRowsFofShowStart}) {
                                                 {row.entity}
                                             </TableCell>
                                             <TableCell align="right">{row.currency}</TableCell>
-                                            <TableCell align="right">{row.numericCode}</TableCell>
-                                            <TableCell align="right">{row.alphabeticCode}</TableCell>
+                                            {/*<TableCell align="right">{row.numericCode}</TableCell>*/}
+                                            {/*<TableCell align="right">{row.alphabeticCode}</TableCell>*/}
                                         </TableRow>
                                     );
                                 })}

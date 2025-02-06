@@ -20,11 +20,21 @@ let CountriesController = class CountriesController {
     constructor(countryService) {
         this.countryService = countryService;
     }
+    getAll(createCountryDto) {
+        return this.countryService.getAllData();
+    }
     saveSelected(createCountryDto) {
         return this.countryService.saveSelected(createCountryDto);
     }
 };
 exports.CountriesController = CountriesController;
+__decorate([
+    (0, common_1.Get)(),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_country_dto_1.CreateCountryDto]),
+    __metadata("design:returntype", void 0)
+], CountriesController.prototype, "getAll", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),

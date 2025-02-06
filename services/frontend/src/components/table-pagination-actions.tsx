@@ -1,3 +1,4 @@
+'use client'
 import {useTheme} from "@mui/material/styles";
 import * as React from "react";
 import Box from "@mui/material/Box";

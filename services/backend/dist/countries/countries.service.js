@@ -16,15 +16,17 @@ exports.CountryService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const country_entity_1 = require("./entities/country.entity");
+const create_country_dto_1 = require("./dto/create-country.dto");
+const countries_entity_1 = require("./entities/countries.entity");
 let CountryService = class CountryService {
     constructor(countryRepository) {
         this.countryRepository = countryRepository;
     }
+    async getAllData() {
+        return await this.countryRepository.find();
+    }
     async saveSelected(createCountryDto) {
-        await this.countryRepository.clear();
-        const country = this.countryRepository.create(createCountryDto);
-        return await this.countryRepository.save(country);
+        return create_country_dto_1.CreateCountryDto;
     }
     async findAll() {
         return await this.countryRepository.find();
@@ -33,7 +35,7 @@ let CountryService = class CountryService {
 exports.CountryService = CountryService;
 exports.CountryService = CountryService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(country_entity_1.CountryEntity)),
+    __param(0, (0, typeorm_1.InjectRepository)(countries_entity_1.CountriesEntity)),
     __metadata("design:paramtypes", [typeorm_2.Repository])
 ], CountryService);
 //# sourceMappingURL=countries.service.js.map
