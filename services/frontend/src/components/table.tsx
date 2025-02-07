@@ -256,8 +256,8 @@ export default function EnhancedTable({handleSendToApi, rows, countries}) {
     );
 
     return (
-        <Stack >
-             <Box sx={{width: '1000px'}}>
+        <Stack sx={{width: '1000px'}}>
+
                 <Paper sx={{width: '100%', mb: 2}}>
                    <EnhancedTableToolbar numSelected={selected.length}/>
                     <TableContainer>
@@ -351,7 +351,6 @@ export default function EnhancedTable({handleSendToApi, rows, countries}) {
                         </Table>
                     </TableContainer>
                 </Paper>
-            </Box>
         </Stack>
     );
 }

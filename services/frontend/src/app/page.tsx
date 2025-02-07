@@ -1,94 +1,99 @@
 'use client'
-import {Box, Button, Container, Stack, Typography} from "@mui/material";
-import EnhancedTable from "@/components/table";
-import handleSendToApiBackend from "@/api/handle-send-to-api";
-import * as React from "react";
-import JSONRows from "@/JSON/output";
-import { useEffect, useState } from "react";
+
+import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import CountryCurrencyTable from "@/components/new-tables";
+import React, { useEffect, useState, useCallback } from "react";
+
+type CurrencyInfo = {
+    currency: string;
+    alphabeticCode: string;
+};
+
+type CountryCurrencyData = {
+    [key: string]: CurrencyInfo[];
+};
 
 export default function Home() {
-    const [selected, setSelected] = useState<readonly number[]>([]);
-    const [rows, setRows] = useState<any[]>([]);
+    const [rows, setRows] = useState<CountryCurrencyData | null>(null);
     const [countries, setCountries] = useState<boolean>(true);
+
+    // Группировка JSON-данных по странам
+    const groupByCountry = (data: any[]): CountryCurrencyData => {
+        return data.reduce((acc: CountryCurrencyData, row) => {
+            if (row.haveInUn === "true") {
+                const country = row.entity;
+                if (!acc[country]) acc[country] = [];
+                acc[country].push({
+                    currency: row.currency,
+                    alphabeticCode: row.alphabeticCode,
+                });
+            }
+            return acc;
+        }, {});
+    };
+
+    // Группировка JSON-данных по валютам
+    const groupByCurrency = (data: any[]): CountryCurrencyData => {
+        return data.reduce((acc: CountryCurrencyData, row) => {
+            if (row.haveInUn === "true") {
+                const currency = `${row.currency} (${row.alphabeticCode})`;
+                if (!acc[currency]) acc[currency] = [];
+                acc[currency].push({
+                    currency: row.entity, // Здесь сохраняем страну вместо валюты
+                    alphabeticCode: "",   // Код валюты здесь не нужен
+                });
+            }
+            return acc;
+        }, {});
+    };
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://localhost:5000/countries"); // Загружаем JSON с сервера
+                const response = await fetch("http://localhost:5000/countries");
                 if (!response.ok) throw new Error("Ошибка загрузки JSON");
                 const data = await response.json();
-                setRows(data.filter(row => row.haveInUn === true || row.haveInUn === "true"));
-                groupByCountry(data)
+
+                // Корректное обновление данных в зависимости от `countries`
+                setRows(countries ? groupByCountry(data) : groupByCurrency(data));
             } catch (error) {
                 console.error("Ошибка загрузки данных:", error);
-                setRows([]); // Если ошибка — устанавливаем пустой массив
+                setRows(null);
             }
         };
         fetchData();
+    }, [countries]); // Добавлено в зависимости, чтобы обновлять данные при переключении
+
+    const toggleStatus = useCallback(() => {
+        setCountries((prev) => !prev);
     }, []);
 
-    // Фильтруем только выбранные строки
-    const showOnlySelected = () => {
-        setRows(prevRows => prevRows.filter(row => selected.includes(row.id)));
-    };
-
-    const handleSendToApi = async (selectedIds: number[]) => {
-        console.log(selectedIds);
-        await handleSendToApiBackend(selectedIds);
-    };
-
-    const toggleStatus =()=>{
-        setCountries(!countries);
-    }
-    const groupByCountry =(rows) => {
-        const result = {};
-
-        rows.forEach(row => {
-            // Проверяем, что страна есть в списке стран
-            if (row.haveInUn === "true") {
-                const country = row.entity;
-                const countryInfo = {
-                    currency: row.currency,
-                    alphabeticCode: row.alphabeticCode
-                };
-
-                // Если ключ (страна) уже существует, добавляем объект в массив
-                if (result[country]) {
-                    result[country].push(countryInfo);
-                } else {
-                    // Если ключа нет, создаем новый массив для страны
-                    result[country] = [countryInfo];
-                }
-            }
-        });
-        console.log(result);
-        return result;
-    }
     return (
-        <Container >
+        <Container>
             <Box sx={{ marginTop: 3, marginX: "auto" }}>
                 <Typography variant="h3" sx={{ textAlign: "center", textTransform: "uppercase" }}>
                     Страны и валюты
                 </Typography>
             </Box>
-            {rows.length > 0 ? <Stack>
-                  <Stack direction="row" sx={{marginLeft: 2}}>
-                    <Button sx={{ width: 160 }} size="medium" variant="contained" onClick={()=>toggleStatus()}>
-                        {countries?<p>
-                            страна+валюты
-                        </p>:<p>
-                            валюта+страны
-                        </p>
-                        }
-                    </Button>
+
+            {rows && Object.keys(rows).length > 0 ? (
+                <Stack>
+                    <Stack direction="row" sx={{ marginLeft: 2 }}>
+                        <Button sx={{ width: 260 }} size="medium" variant="contained" onClick={toggleStatus}>
+                            <Typography>
+                                {countries ? "Страна + Валюты" : "Валюта + Страны"}
+                            </Typography>
+                        </Button>
+                    </Stack>
+                    <Box>
+                        <CountryCurrencyTable groupedData={rows} countries={countries} />
+                    </Box>
                 </Stack>
-                <Box>
-                    <EnhancedTable handleSendToApi={handleSendToApi} rows={rows} countries={countries}/>
-                </Box>
-            </Stack>:<Stack>
-                Загрузка ...
-            </Stack>
-            }
+            ) : (
+                <Stack>
+                    <Typography>Загрузка...</Typography>
+                </Stack>
+            )}
         </Container>
     );
 }
