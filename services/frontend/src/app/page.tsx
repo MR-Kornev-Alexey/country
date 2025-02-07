@@ -19,7 +19,7 @@ export default function Home() {
 
     // Группировка JSON-данных по странам
     const groupByCountry = (data: any[]): CountryCurrencyData => {
-        return data.reduce((acc: CountryCurrencyData, row) => {
+        const grouped = data.reduce((acc: CountryCurrencyData, row) => {
             if (row.haveInUn === "true") {
                 const country = row.entity;
                 if (!acc[country]) acc[country] = [];
@@ -30,7 +30,11 @@ export default function Home() {
             }
             return acc;
         }, {});
+
+        // Сортируем ключи (страны) по алфавиту
+        return Object.fromEntries(Object.entries(grouped).sort(([a], [b]) => a.localeCompare(b))) as CountryCurrencyData;
     };
+
 
     // Группировка JSON-данных по валютам
     const groupByCurrency = (data: any[]): CountryCurrencyData => {
