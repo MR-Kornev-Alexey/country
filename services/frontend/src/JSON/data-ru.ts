@@ -1,4 +1,4 @@
-const rows = [
+const rows_ru = [
     {
         "id": 1,
         "currency": "Афгани",
@@ -3115,4 +3115,4 @@ const rows = [
         "entity": "UIC-Franc_ZZ05"
     }
 ]
-export default rows;
+export default rows_ru;

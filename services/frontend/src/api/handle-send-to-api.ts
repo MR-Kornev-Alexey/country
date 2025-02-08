@@ -1,4 +1,6 @@
-const handleSendToApiBackend = async (selected) => {
+import {CurrencyInfo} from "@/types/types";
+
+const handleSendToApiBackend =  async (selected: CurrencyInfo[] | null) => {
     try {
         const response = await fetch("http://localhost:5000/countries", {
             method: "POST",

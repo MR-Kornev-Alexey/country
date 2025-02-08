@@ -1,0 +1,14 @@
+
+# Nest.js билд файлы
+dist/
+.cache/
+
+# Node.js зависимости
+node_modules/
+.yarn/
+package-lock.json
+yarn.lock
+
+# Файлы окружения
+.env*
+*.env

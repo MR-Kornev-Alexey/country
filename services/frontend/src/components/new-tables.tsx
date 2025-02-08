@@ -80,7 +80,7 @@ const CountryCurrencyTable: React.FC<CountryCurrencyTableProps> = ({ groupedData
                 <TableHead>
                     <TableRow>
                         <TableCell />
-                        <TableCell>{countries ? <b>Страна</b> : <b>Валюта</b>}</TableCell>
+                        <TableCell width="30%">{countries ? <b>Страна</b> : <b>Валюта</b>}</TableCell>
                         <TableCell>{countries ? <b>Коды валют</b> : <b>Страны</b>}</TableCell>
                     </TableRow>
                 </TableHead>

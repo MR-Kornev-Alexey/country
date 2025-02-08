@@ -1,8 +1,10 @@
 'use client'
 
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import {Box, Button, Container, Stack, Typography} from "@mui/material";
 import CountryCurrencyTable from "@/components/new-tables";
-import React, { useEffect, useState, useCallback } from "react";
+import React, {useEffect, useState, useCallback} from "react";
+import handleSendToApiBackend from "@/api/handle-send-to-api";
+import rows_ru from "../JSON/output"
 
 type CurrencyInfo = {
     currency: string;
@@ -72,30 +74,38 @@ export default function Home() {
         setCountries((prev) => !prev);
     }, []);
 
+    const firstDownload =  async () => {
+        await handleSendToApiBackend(rows_ru)
+    }
     return (
         <Container>
-            <Box sx={{ marginTop: 3, marginX: "auto" }}>
-                <Typography variant="h3" sx={{ textAlign: "center", textTransform: "uppercase" }}>
+            <Box sx={{marginTop: 3, marginX: "auto"}}>
+                <Typography variant="h3" sx={{textAlign: "center", textTransform: "uppercase"}}>
                     Страны и валюты
                 </Typography>
             </Box>
 
             {rows && Object.keys(rows).length > 0 ? (
                 <Stack>
-                    <Stack direction="row" sx={{ marginLeft: 2 }}>
-                        <Button sx={{ width: 260 }} size="medium" variant="contained" onClick={toggleStatus}>
+                    <Stack direction="row" sx={{marginLeft: 2}}>
+                        <Button sx={{width: 260}} size="medium" variant="contained" onClick={toggleStatus}>
                             <Typography>
                                 {countries ? "Страна + Валюты" : "Валюта + Страны"}
                             </Typography>
                         </Button>
                     </Stack>
                     <Box>
-                        <CountryCurrencyTable groupedData={rows} countries={countries} />
+                        <CountryCurrencyTable groupedData={rows} countries={countries}/>
                     </Box>
                 </Stack>
             ) : (
                 <Stack>
                     <Typography>Загрузка...</Typography>
+                    <Button sx={{width: 260}} size="medium" variant="contained" onClick={() => firstDownload()}>
+                        <Typography>
+                            Загрузить
+                        </Typography>
+                    </Button>
                 </Stack>
             )}
         </Container>

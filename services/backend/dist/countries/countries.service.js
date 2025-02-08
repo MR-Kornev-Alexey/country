@@ -16,7 +16,6 @@ exports.CountryService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const create_country_dto_1 = require("./dto/create-country.dto");
 const countries_entity_1 = require("./entities/countries.entity");
 let CountryService = class CountryService {
     constructor(countryRepository) {
@@ -26,7 +25,10 @@ let CountryService = class CountryService {
         return await this.countryRepository.find();
     }
     async saveSelected(createCountryDto) {
-        return create_country_dto_1.CreateCountryDto;
+        await this.countryRepository.clear();
+        const country = this.countryRepository.create(createCountryDto);
+        console.log(country);
+        return await this.countryRepository.save(country);
     }
     async findAll() {
         return await this.countryRepository.find();

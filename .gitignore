@@ -1,7 +1,17 @@
-.idea
-.temp
+# IDE и временные файлы
+.idea/
+.temp/
+
+# Файлы окружения
 .env*
-node_modules
-.yarn
+*.env
+
+# Node.js зависимости
+node_modules/
+.yarn/
 package-lock.json
-.next
+yarn.lock
+
+# Файлы кэша Next.js
+.services/frontend/.next
+.services/backend/.next

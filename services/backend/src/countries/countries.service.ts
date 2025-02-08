@@ -17,13 +17,11 @@ export class CountryService {
   }
 
   async saveSelected(createCountryDto: CreateCountryDto): Promise<CreateCountryDto> {
-    // Удаляем все записи в таблице
-    // await this.countryRepository.clear();
-    return CreateCountryDto
-    // const country = this.countryRepository.create(createCountryDto);
-    // console.log(country);
-    // // Сохраняем новый объект в базу данных
-    // return await this.countryRepository.save(country);
+    await this.countryRepository.clear();
+    const country = this.countryRepository.create(createCountryDto);
+    console.log(country);
+    // Сохраняем новый объект в базу данных
+    return await this.countryRepository.save(country);
   }
 
   async findAll(): Promise<CountryEntity[]> {

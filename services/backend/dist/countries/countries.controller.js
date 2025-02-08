@@ -15,12 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CountriesController = void 0;
 const common_1 = require("@nestjs/common");
 const countries_service_1 = require("./countries.service");
-const create_country_dto_1 = require("./dto/create-country.dto");
 let CountriesController = class CountriesController {
     constructor(countryService) {
         this.countryService = countryService;
     }
-    getAll(createCountryDto) {
+    getAll() {
         return this.countryService.getAllData();
     }
     saveSelected(createCountryDto) {
@@ -30,16 +29,15 @@ let CountriesController = class CountriesController {
 exports.CountriesController = CountriesController;
 __decorate([
     (0, common_1.Get)(),
-    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_country_dto_1.CreateCountryDto]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], CountriesController.prototype, "getAll", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_country_dto_1.CreateCountryDto]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], CountriesController.prototype, "saveSelected", null);
 exports.CountriesController = CountriesController = __decorate([

@@ -1,0 +1,13 @@
+# Next.js кэш и билд
+.next/
+out/
+
+# Node.js зависимости
+node_modules/
+.yarn/
+package-lock.json
+yarn.lock
+
+# Файлы окружения
+.env*
+*.env
