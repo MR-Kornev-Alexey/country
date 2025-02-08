@@ -1,5 +1,5 @@
 export interface CurrencyInfo {
-    id: number;
+    id?: number;
     currency: string;
     alphabeticCode: string;
     numericCode: string;

@@ -1,4 +1,5 @@
-const data = [
+
+const data:any = [
   {
     "Entity": "AFGHANISTAN",
     "Currency": "Afghani",

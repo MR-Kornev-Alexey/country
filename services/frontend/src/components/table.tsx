@@ -15,34 +15,46 @@ import {
 } from "@mui/material";
 import TablePaginationActions from "@/components/table-pagination-actions";
 
-// Определяем типы для валюты и объекта данных
+
 type CurrencyInfo = {
     currency: string;
     alphabeticCode: string;
 };
 
 type CountryCurrencyData = {
-    [country: string]: CurrencyInfo[];
+    [country: string]: CurrencyInfo[]; // Страна: массив валют
 };
 
-// Определяем интерфейс пропсов
+
 interface CountryCurrencyTableProps {
     groupedData: CountryCurrencyData | null;
     countries: boolean;
+    sentSelectToApi: (newSelection: string[]) => void; // Функция для отправки выбранных стран/валют
+    selected: string[];
+    setSelected: React.Dispatch<React.SetStateAction<string[]>>; // Тип для setSelected, как сеттер состояния
 }
 
-const CountryCurrencyTable: React.FC<CountryCurrencyTableProps> = ({groupedData, countries}) => {
-    const [selected, setSelected] = React.useState<string[]>([]);
+const CountryCurrencyTable: React.FC<CountryCurrencyTableProps> = ({
+                                                                       groupedData,
+                                                                       countries,
+                                                                       sentSelectToApi,
+                                                                       selected,
+                                                                       setSelected,
+                                                                   }) => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const isItemSelected = (country: string) => selected.includes(country);
 
     const handleSelect = (country: string) => {
-        setSelected((prev) =>
-            isItemSelected(country)
+        setSelected((prev: string[]) => {
+            const newSelection = isItemSelected(country)
                 ? prev.filter((item) => item !== country)
-                : [...prev, country]
-        );
+                : [...prev, country];
+
+            sentSelectToApi(newSelection); // Отправляем данные на бэкенд
+
+            return newSelection;
+        });
     };
 
     const labelId = (country: string) => `enhanced-table-checkbox-${country}`;
@@ -50,15 +62,16 @@ const CountryCurrencyTable: React.FC<CountryCurrencyTableProps> = ({groupedData,
     if (!groupedData) {
         return <p>Данные загружаются...</p>;
     }
+
     const handleChangePage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
-        newPage: number,
+        newPage: number
     ) => {
         setPage(newPage);
     };
 
     const handleChangeRowsPerPage = (
-        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
@@ -74,14 +87,12 @@ const CountryCurrencyTable: React.FC<CountryCurrencyTableProps> = ({groupedData,
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - Object.keys(groupedData).length) : 0;
 
-    return (<>
-            <Box>
-                {}
-            </Box>
+    return (
+        <>
             <TableContainer component={Paper}>
                 <Table>
                     <TableHead>
-                        <TableRow>
+                        <TableRow >
                             <TableCell/>
                             <TableCell width="30%">{countries ? <b>Страна</b> : <b>Валюта</b>}</TableCell>
                             <TableCell>{countries ? <b>Коды валют</b> : <b>Страны</b>}</TableCell>
@@ -93,9 +104,11 @@ const CountryCurrencyTable: React.FC<CountryCurrencyTableProps> = ({groupedData,
                             return (
                                 <TableRow
                                     key={country}
+                                    onClick={() => handleSelect(country)}
                                     sx={{
-                                        backgroundColor: isSelected ? "#8794f3" : (index % 2 === 1 ? "#d4effa" : "transparent"),
-                                        transition: "background-color 0.2s ease-in-out"
+                                        backgroundColor: isSelected ? "#87cdf3" : (index % 2 === 1 ? "#d4effa" : "transparent"),
+                                        transition: "background-color 0.2s ease-in-out",
+                                        cursor: "pointer"
                                     }}
                                 >
                                     <TableCell padding="checkbox">
@@ -114,15 +127,15 @@ const CountryCurrencyTable: React.FC<CountryCurrencyTableProps> = ({groupedData,
                                             <Box key={index}>
                                                 {countries ? (
                                                     <Tooltip title={item.currency} arrow>
-                                                    <span
-                                                        style={{
-                                                            marginRight: 10,
-                                                            cursor: "pointer",
-                                                            textDecoration: "underline",
-                                                        }}
-                                                    >
-                                                        {item.alphabeticCode}
-                                                    </span>
+                                                        <span
+                                                            style={{
+                                                                marginRight: 10,
+                                                                cursor: "pointer",
+                                                                textDecoration: "underline",
+                                                            }}
+                                                        >
+                                                            {item.alphabeticCode}
+                                                        </span>
                                                     </Tooltip>
                                                 ) : (
                                                     <Box>{item.currency}</Box>

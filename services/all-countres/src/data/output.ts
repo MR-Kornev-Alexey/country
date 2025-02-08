@@ -1,6 +1,5 @@
-import {CurrencyInfo} from "@/types/types";
 
-const rows:any= [
+const rows= [
   {
     "id": 1,
     "currency": "Афгани",

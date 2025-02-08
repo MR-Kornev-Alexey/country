@@ -1,0 +1,65 @@
+{
+  "name": "material-ui-nextjs-ts",
+  "version": "5.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "post-update": "echo \"codesandbox preview only, need an update\" && pnpm update --latest"
+  },
+  "dependencies": {
+    "@emotion/cache": "latest",
+    "@emotion/react": "latest",
+    "@emotion/styled": "latest",
+    "@logto/next": "3.7.1",
+    "@mui/icons-material": "latest",
+    "@mui/material": "latest",
+    "@mui/material-nextjs": "latest",
+    "@openreplay/tracker": "^15.0.3",
+    "animejs": "^3.2.2",
+    "next": "latest",
+    "normalize.css": "^8.0.1",
+    "posthog-js": "^1.200.2",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-scroll": "^1.9.0",
+    "react-slick": "^0.30.2",
+    "react-spring": "^9.7.4",
+    "react-yandex-metrika": "^2.6.0",
+    "styled-components": "^6.1.13"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "@types/animejs": "^3",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@types/react-scroll": "^1.8.10",
+    "@types/react-slick": "^0.23.13",
+    "eslint": "^9.15.0",
+    "eslint-config-next": "latest",
+    "eslint-plugin-react": "^7.37.2",
+    "globals": "^15.12.0",
+    "resolve-url-loader": "^5.0.0",
+    "sass": "^1.81.0",
+    "sass-loader": "^13.3.3",
+    "typescript": "latest",
+    "typescript-eslint": "^8.15.0"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es2021": true,
+      "node": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+      "ecmaVersion": 12,
+      "sourceType": "module"
+    },
+    "rules": {}
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+}

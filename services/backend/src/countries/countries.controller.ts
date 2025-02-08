@@ -1,6 +1,6 @@
-import {Controller, Get, Post, Body} from '@nestjs/common';
+import {Controller, Get, Post, Body, HttpCode} from '@nestjs/common';
 import {CountryService} from './countries.service';
-import {DtoTypes} from "../types/types";
+import {DtoTypes, SelectDto} from "../types/types";
 
 @Controller('countries')
 export class CountriesController {
@@ -8,12 +8,19 @@ export class CountriesController {
     }
 
     @Get()
+    @HttpCode(200)
     getAll() {
         return this.countryService.getAllData()
     }
 
-    @Post()
-    saveSelected(@Body() createCountryDto: DtoTypes) {
-        return this.countryService.saveSelected(createCountryDto)
+    @Post("save")
+    @HttpCode(200)
+    saveAll(@Body() createCountryDto: DtoTypes) {
+        return this.countryService.saveAll(createCountryDto)
+    }
+    @Post("select")
+    @HttpCode(200)
+    saveSelected(@Body() selectDto: SelectDto) {
+        return this.countryService.saveSelected(selectDto);
     }
 }

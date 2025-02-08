@@ -1,8 +1,8 @@
-export declare class CountryEntity {
-    id_inn: number;
-    id: number;
+export interface CurrencyInfo {
+    id?: number;
     currency: string;
     alphabeticCode: string;
     numericCode: string;
     entity: string;
+    haveInUn: string;
 }

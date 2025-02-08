@@ -11,14 +11,14 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const countries_service_1 = require("./countries.service");
 const countries_controller_1 = require("./countries.controller");
-const country_entity_1 = require("./entities/country.entity");
 const countries_entity_1 = require("./entities/countries.entity");
+const select_entity_1 = require("./entities/select.entity");
 let CountriesModule = class CountriesModule {
 };
 exports.CountriesModule = CountriesModule;
 exports.CountriesModule = CountriesModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([country_entity_1.CountryEntity, countries_entity_1.CountriesEntity])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([countries_entity_1.CountriesEntity, select_entity_1.SelectEntity])],
         controllers: [countries_controller_1.CountriesController],
         providers: [countries_service_1.CountryService],
     })

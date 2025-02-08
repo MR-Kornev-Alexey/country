@@ -17,27 +17,43 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const countries_entity_1 = require("./entities/countries.entity");
+const select_entity_1 = require("./entities/select.entity");
 let CountryService = class CountryService {
-    constructor(countryRepository) {
+    constructor(countryRepository, selectRepository) {
         this.countryRepository = countryRepository;
+        this.selectRepository = selectRepository;
     }
     async getAllData() {
-        return await this.countryRepository.find();
+        const countries = await this.countryRepository.find();
+        const selected = await this.selectRepository.findOne({ where: { id: 1 } });
+        return [countries, selected];
     }
-    async saveSelected(createCountryDto) {
+    async saveAll(createCountryDto) {
         await this.countryRepository.clear();
         const country = this.countryRepository.create(createCountryDto);
-        console.log(country);
         return await this.countryRepository.save(country);
     }
-    async findAll() {
-        return await this.countryRepository.find();
+    async saveSelected(selectDto) {
+        const existingData = await this.selectRepository.findOne({ where: { id: (0, typeorm_2.In)([1, 2]) } });
+        if (existingData) {
+            existingData.data = selectDto.data;
+            return await this.selectRepository.save(existingData);
+        }
+        else {
+            const newSelect = this.selectRepository.create(selectDto);
+            return await this.selectRepository.save(newSelect);
+        }
+    }
+    async findSelect() {
+        return await this.selectRepository.find();
     }
 };
 exports.CountryService = CountryService;
 exports.CountryService = CountryService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(countries_entity_1.CountriesEntity)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __param(1, (0, typeorm_1.InjectRepository)(select_entity_1.SelectEntity)),
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository])
 ], CountryService);
 //# sourceMappingURL=countries.service.js.map

@@ -1,5 +1,5 @@
 {
-  "name": "front",
+  "name": "frontend",
   "version": "0.1.0",
   "private": true,
   "workspaces": [
@@ -18,21 +18,44 @@
     "@mui/icons-material": "^6.4.3",
     "@mui/material": "^6.4.3",
     "@mui/styled-engine-sc": "^6.4.3",
+    "eslint-plugin-react": "^7.37.4",
     "next": "15.1.6",
     "punycode": "^2.3.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "styled-components": "^6.1.14"
+    "styled-components": "^6.1.14",
+    "typescript-eslint": "^8.23.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@next/eslint-plugin-next": "^15.1.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@typescript-eslint/eslint-plugin": "^8.23.0",
+    "@typescript-eslint/parser": "^8.23.0",
     "eslint": "8.22.0",
     "eslint-config-next": "15.1.6",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es2021": true,
+      "node": true
+    },
+    "extends": "plugin:@next/next/recommended",
+    "parserOptions": {
+      "ecmaVersion": 12,
+      "sourceType": "module"
+    },
+    "rules": {
+      "@next/next/no-html-link-for-pages": [
+        "error",
+        "pages/"
+      ]
+    }
   }
 }

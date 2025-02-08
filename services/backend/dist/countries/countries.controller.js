@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CountriesController = void 0;
 const common_1 = require("@nestjs/common");
 const countries_service_1 = require("./countries.service");
+const types_1 = require("../types/types");
 let CountriesController = class CountriesController {
     constructor(countryService) {
         this.countryService = countryService;
@@ -22,22 +23,35 @@ let CountriesController = class CountriesController {
     getAll() {
         return this.countryService.getAllData();
     }
-    saveSelected(createCountryDto) {
-        return this.countryService.saveSelected(createCountryDto);
+    saveAll(createCountryDto) {
+        return this.countryService.saveAll(createCountryDto);
+    }
+    saveSelected(selectDto) {
+        return this.countryService.saveSelected(selectDto);
     }
 };
 exports.CountriesController = CountriesController;
 __decorate([
     (0, common_1.Get)(),
+    (0, common_1.HttpCode)(200),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], CountriesController.prototype, "getAll", null);
 __decorate([
-    (0, common_1.Post)(),
+    (0, common_1.Post)("save"),
+    (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], CountriesController.prototype, "saveAll", null);
+__decorate([
+    (0, common_1.Post)("select"),
+    (0, common_1.HttpCode)(200),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [types_1.SelectDto]),
     __metadata("design:returntype", void 0)
 ], CountriesController.prototype, "saveSelected", null);
 exports.CountriesController = CountriesController = __decorate([

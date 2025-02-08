@@ -3,7 +3,7 @@
 import {Box, Button, Container, Stack, Typography} from "@mui/material";
 import CountryCurrencyTable from "@/components/table";
 import React, {useEffect, useState, useCallback} from "react";
-import handleSendToApiBackend from "@/api/handle-send-to-api";
+import {handleSendSelect, handleSendToApiBackend, fetchCountriesData} from "@/api/handle-send-to-api";
 import rows_ru from "../JSON/output"
 
 type CurrencyInfo = {
@@ -18,8 +18,26 @@ type CountryCurrencyData = {
 export default function Home() {
     const [rows, setRows] = useState<CountryCurrencyData | null>(null);
     const [countries, setCountries] = useState<boolean>(true);
+    const [selected, setSelected] = React.useState<string[]>([]);
 
-    // Группировка JSON-данных по странам
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await fetchCountriesData(); // Получаем данные через API
+
+                // Корректное обновление данных в зависимости от `countries`
+                setRows(countries ? groupByCountry(data[0]) : groupByCurrency(data[0]));
+                setSelected(data[1].data)
+            } catch (error) {
+                setRows(null);
+                setSelected([])
+            }
+        };
+        fetchData();
+    }, [countries]);
+
+
+    // Группировка data-данных по странам
     const groupByCountry = (data: any[]): CountryCurrencyData => {
         const grouped = data.reduce((acc: CountryCurrencyData, row) => {
             if (row.haveInUn === "true") {
@@ -38,7 +56,7 @@ export default function Home() {
     };
 
 
-    // Группировка JSON-данных по валютам
+    // Группировка data-данных по валютам
     const groupByCurrency = (data: any[]): CountryCurrencyData => {
         return data.reduce((acc: CountryCurrencyData, row) => {
             if (row.haveInUn === "true") {
@@ -53,23 +71,6 @@ export default function Home() {
         }, {});
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch("http://localhost:5000/countries");
-                if (!response.ok) throw new Error("Ошибка загрузки JSON");
-                const data = await response.json();
-
-                // Корректное обновление данных в зависимости от `countries`
-                setRows(countries ? groupByCountry(data) : groupByCurrency(data));
-            } catch (error) {
-                console.error("Ошибка загрузки данных:", error);
-                setRows(null);
-            }
-        };
-        fetchData();
-    }, [countries]); // Добавлено в зависимости, чтобы обновлять данные при переключении
-
     const toggleStatus = useCallback(() => {
         setCountries((prev) => !prev);
     }, []);
@@ -77,9 +78,13 @@ export default function Home() {
     const firstDownload =  async () => {
         await handleSendToApiBackend(rows_ru)
     }
+    const sentSelectToApi = async (selected: string[]) => {
+         await handleSendSelect(selected)
+    }
+
     return (
         <Container>
-            <Box sx={{marginTop: 3, marginX: "auto"}}>
+            <Box sx={{marginY: 4, marginX: "auto"}}>
                 <Typography variant="h3" sx={{textAlign: "center", textTransform: "uppercase"}}>
                     Страны и валюты
                 </Typography>
@@ -88,20 +93,20 @@ export default function Home() {
             {rows && Object.keys(rows).length > 0 ? (
                 <Stack>
                     <Stack direction="row" sx={{marginLeft: 2}}>
-                        <Button sx={{width: 260}} size="medium" variant="contained" onClick={toggleStatus}>
+                        <Button sx={{width: 260, backgroundColor:"#87cdf3" , color:"#121a1e"}} size="medium" variant="contained" onClick={toggleStatus}>
                             <Typography>
                                 {countries ? "Страна + Валюты" : "Валюта + Страны"}
                             </Typography>
                         </Button>
                     </Stack>
                     <Box>
-                        <CountryCurrencyTable groupedData={rows} countries={countries}/>
+                        <CountryCurrencyTable groupedData={rows} selected={selected} setSelected={setSelected} countries={countries} sentSelectToApi={sentSelectToApi}/>
                     </Box>
                 </Stack>
             ) : (
                 <Stack>
-                    <Typography>Загрузка...</Typography>
-                    <Button sx={{width: 260}} size="medium" variant="contained" onClick={() => firstDownload()}>
+                    <Typography sx={{my:4}}>Загрузка...</Typography>
+                    <Button sx={{width: 260, backgroundColor:"#87cdf3" , color:"#121a1e" }} size="medium" variant="contained" onClick={() => firstDownload()}>
                         <Typography>
                             Загрузить
                         </Typography>
