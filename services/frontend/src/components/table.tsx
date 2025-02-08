@@ -229,19 +229,7 @@ export default function EnhancedTable({handleSendToApi, rows, countries}) {
         handleSelectApi(newSelected);
     };
 
-    const handleChangePage = (
-        event: React.MouseEvent<HTMLButtonElement> | null,
-        newPage: number,
-    ) => {
-        setPage(newPage);
-    };
 
-    const handleChangeRowsPerPage = (
-        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    ) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
