@@ -1,7 +1,7 @@
 'use client'
 
 import {Box, Button, Container, Stack, Typography} from "@mui/material";
-import CountryCurrencyTable from "@/components/new-tables";
+import CountryCurrencyTable from "@/components/table";
 import React, {useEffect, useState, useCallback} from "react";
 import handleSendToApiBackend from "@/api/handle-send-to-api";
 import rows_ru from "../JSON/output"
