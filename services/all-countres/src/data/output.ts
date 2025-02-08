@@ -1,5 +1,5 @@
 
-const rows= [
+const rows_ru= [
   {
     "id": 1,
     "currency": "Афгани",
@@ -3561,4 +3561,4 @@ const rows= [
     "haveInUn": "false"
   }
 ]
- export default rows
+ export default rows_ru

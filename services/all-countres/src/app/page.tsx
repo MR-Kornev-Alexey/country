@@ -1,18 +1,17 @@
-import styles from "./page.module.css";
-import {Box} from "@mui/material";
+import styles from "../css/page.module.css";
 import React from "react";
+import MainScreen from "@/components/main";
 
 export default function Home() {
-  return (
-    <Box className={styles.page}>
-      <main className={styles.main}>
-        hhhh
-      </main>
+
+    return (
+    <div>
+      <MainScreen />
       <footer className={styles.footer}>
            <div>
              Designed by <a href="mailto:alex@mrk.digtal"> Kornev Alexey</a>
            </div>
       </footer>
-    </Box>
+    </div>
   );
 }

@@ -24,6 +24,7 @@ let CountriesController = class CountriesController {
         return this.countryService.getAllData();
     }
     saveAll(createCountryDto) {
+        console.log(createCountryDto);
         return this.countryService.saveAll(createCountryDto);
     }
     saveSelected(selectDto) {

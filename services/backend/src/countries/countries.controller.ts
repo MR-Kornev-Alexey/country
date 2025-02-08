@@ -16,6 +16,7 @@ export class CountriesController {
     @Post("save")
     @HttpCode(200)
     saveAll(@Body() createCountryDto: DtoTypes) {
+        console.log(createCountryDto);
         return this.countryService.saveAll(createCountryDto)
     }
     @Post("select")
