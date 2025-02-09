@@ -100,7 +100,7 @@ export default function MainScreen() {
             </Box>
             {rows && Object.keys(rows).length > 0 ? (
                 <Stack>
-                     <Stack direction="row" sx={{marginLeft: 2}}>
+                     <Stack direction="row" sx={{marginLeft: 2, marginY: 2}}>
                         <Button sx={{width: 260, backgroundColor:"#87cdf3" , color:"#121a1e"}} size="medium" variant="contained" onClick={toggleStatus}>
                             <Typography>
                                 {countries ? "Страна + Валюты" : "Валюта + Страны"}
