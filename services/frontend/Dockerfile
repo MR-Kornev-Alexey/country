@@ -9,7 +9,7 @@ RUN npm install --legacy-peer-deps
 
 # Копирование файлов проекта и сборка
 COPY . .
-RUN npm run build:no
+RUN npm run build
 
 # Этап сервировки
 FROM node:22
