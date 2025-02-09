@@ -1,31 +1,23 @@
 # Этап сборки
-FROM node:22 AS builder
+FROM node:22 AS build
 
-# Enable Corepack and install Yarn 4.5.1
-RUN corepack enable && corepack prepare yarn@4.5.1 --activate
-
-# Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Копируем файлы зависимостей
-COPY package.json yarn.lock ./
+# Копирование файлов зависимостей и установка зависимостей
+COPY package*.json ./
+RUN npm install --legacy-peer-deps
 
-# Устанавливаем зависимости
-RUN yarn install --frozen-lockfile
-
-# Копируем исходный код
+# Копирование файлов проекта и сборка
 COPY . .
+RUN npm run build:no
 
-# Собираем приложение
-RUN yarn workspace frontend build
+# Этап сервировки
+FROM node:22
 
-# Этап выполнения
-FROM node:20-alpine
-
-# Устанавливаем рабочую директорию
 WORKDIR /app
 
-COPY --from=builder /app ./
+# Копирование сборки из предыдущего этапа
+COPY --from=build /app ./
 
 # Установка зависимостей только для продакшена
 RUN npm install --production --legacy-peer-deps
