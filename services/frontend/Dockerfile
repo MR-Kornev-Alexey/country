@@ -8,10 +8,10 @@ RUN corepack enable && corepack prepare yarn@4.5.1 --activate
 WORKDIR /app
 
 # Копируем файлы зависимостей
-COPY package.json  ./
+COPY package.json yarn.lock ./
 
 # Устанавливаем зависимости
-RUN npm install --legacy-peer-deps
+RUN yarn install --frozen-lockfile
 
 # Копируем исходный код
 COPY . .
