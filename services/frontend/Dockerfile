@@ -11,7 +11,7 @@ WORKDIR /app
 COPY package.json  ./
 
 # Устанавливаем зависимости
-RUN yarn install --frozen-lockfile
+RUN yarn install --immutable
 
 # Копируем исходный код
 COPY . .
