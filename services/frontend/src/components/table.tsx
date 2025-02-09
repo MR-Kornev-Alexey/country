@@ -84,8 +84,8 @@ const CountryCurrencyTable: React.FC<CountryCurrencyTableProps> = ({
         [groupedData, page, rowsPerPage]
     );
 
-    const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - Object.keys(groupedData).length) : 0;
+    // const emptyRows =
+    //     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - Object.keys(groupedData).length) : 0;
 
     return (
         <>

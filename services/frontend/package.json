@@ -1,44 +1,50 @@
 {
   "name": "frontend",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
-  "workspaces": [
-    "country"
-  ],
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "post-update": "echo \"codesandbox preview only, need an update\" && pnpm update --latest"
   },
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
-    "@fontsource/roboto": "^5.1.1",
-    "@mui/icons-material": "^6.4.3",
-    "@mui/material": "^6.4.3",
-    "@mui/styled-engine-sc": "^6.4.3",
-    "eslint-plugin-react": "^7.37.4",
-    "next": "15.1.6",
-    "punycode": "^2.3.1",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "styled-components": "^6.1.14",
-    "typescript-eslint": "^8.23.0"
+    "@emotion/cache": "latest",
+    "@emotion/react": "latest",
+    "@emotion/styled": "latest",
+    "@logto/next": "^4.1.0",
+    "@mui/icons-material": "latest",
+    "@mui/material": "latest",
+    "@mui/material-nextjs": "latest",
+    "@openreplay/tracker": "^15.0.3",
+    "animejs": "^3.2.2",
+    "next": "^15.1.6",
+    "normalize.css": "^8.0.1",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-scroll": "^1.9.0",
+    "react-slick": "^0.30.2",
+    "react-spring": "^9.7.4",
+    "styled-components": "^6.1.13"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@next/eslint-plugin-next": "^15.1.6",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "@typescript-eslint/eslint-plugin": "^8.23.0",
-    "@typescript-eslint/parser": "^8.23.0",
-    "eslint": "8.22.0",
-    "eslint-config-next": "15.1.6",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "@eslint/js": "^9.15.0",
+    "@types/animejs": "^3",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@types/react-scroll": "^1.8.10",
+    "@types/react-slick": "^0.23.13",
+    "eslint": "^9.15.0",
+    "eslint-config-next": "latest",
+    "eslint-plugin-react": "^7.37.2",
+    "globals": "^15.12.0",
+    "resolve-url-loader": "^5.0.0",
+    "sass": "^1.81.0",
+    "sass-loader": "^13.3.3",
+    "typescript": "latest",
+    "typescript-eslint": "^8.15.0"
   },
   "eslintConfig": {
     "env": {
@@ -46,16 +52,12 @@
       "es2021": true,
       "node": true
     },
-    "extends": "plugin:@next/next/recommended",
+    "extends": "eslint:recommended",
     "parserOptions": {
       "ecmaVersion": 12,
       "sourceType": "module"
     },
-    "rules": {
-      "@next/next/no-html-link-for-pages": [
-        "error",
-        "pages/"
-      ]
-    }
-  }
+    "rules": {}
+  },
+  "packageManager": "yarn@4.5.1"
 }

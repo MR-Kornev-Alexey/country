@@ -1,6 +1,6 @@
 import {CurrencyInfo} from "@/types/types";
 
-export const handleSendToApiBackend =  async (selected: CurrencyInfo[] | null) => {
+export const handleSendToApiBackend =  async (selected: CurrencyInfo[]) => {
     try {
         const response = await fetch("http://localhost:5000/countries/save", {
             method: "POST",
@@ -59,6 +59,5 @@ export const fetchCountriesData = async () => {
         return await response.json();
     } catch (error) {
         console.error("Ошибка загрузки данных:", error);
-        throw error;
     }
 };

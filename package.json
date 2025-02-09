@@ -9,11 +9,7 @@
     "services/*"
   ],
   "scripts": {
-    "prepare": "yarn install && yarn workspaces foreach --all install && yarn workspaces focus --all && yarn workspaces foreach --all run prepare",
-    "local": "docker compose -p l1vestack up --no-attach db-local --force-recreate --build frontend-local console-local docs-local db-local admin-local core-local",
-    "local:dev": "docker compose -p l1vestack up --no-attach db-local --no-attach console-dev --force-recreate --build frontend-local console-dev docs-local db-local admin-dev",
-    "front": "docker compose -p l1vestack up --force-recreate --build frontend-local docs-local db-local admin-local core-local",
-    "dev:frontend": "yarn workspace landing.l1vestack.h3llo.cloud dev"
+    "prepare": "yarn install && yarn workspaces foreach --all install && yarn workspaces focus --all && yarn workspaces foreach --all run prepare"
   },
   "license": "UNLICENSED",
   "packageManager": "yarn@4.5.1",

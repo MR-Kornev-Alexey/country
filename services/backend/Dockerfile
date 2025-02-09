@@ -1,26 +1,31 @@
-FROM node:20 AS builder
+FROM node:22 AS builder
 
 WORKDIR /app
 
-COPY .env ./
-COPY package*.json ./
+# Копируем package.json и yarn.lock
+COPY package.json yarn.lock ./
 
-RUN npm install
+# Устанавливаем зависимости
+RUN yarn install
 
+# Копируем остальной код приложения
 COPY . .
 
-RUN npm run build
+# Устанавливаем @nestjs/cli глобально
+RUN yarn global add @nestjs/cli
 
-FROM node:20
+# Собираем приложение
+RUN yarn build
 
-RUN mkdir -p /app/
-WORKDIR /app/
+# Production stage
+FROM node:22-alpine
 
+WORKDIR /app
+
+# Копируем необходимые файлы из стадии сборки
 COPY --from=builder /app/node_modules /app/node_modules
-COPY --from=builder /app/telegamBot /app/telegamBot
-COPY --from=builder /app/package*.json /app/
 COPY --from=builder /app/dist /app/dist
-COPY --from=builder /app/prisma /app/prisma
+COPY --from=builder /app/package.json /app/
 
-EXPOSE 8000
-CMD [ "npm", "run", "start:prod" ]
+EXPOSE 5000
+CMD [ "node", "dist/main.js" ]

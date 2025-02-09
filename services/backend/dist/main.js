@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@nestjs/core");
 const app_module_1 = require("./app.module");
-const dotenv = require("dotenv");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.enableCors({
@@ -10,9 +9,12 @@ async function bootstrap() {
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
         allowedHeaders: 'Content-Type, Accept',
     });
-    dotenv.config();
-    await app.listen(process.env.PORT ?? 5000);
-    console.log("port:", process.env.PORT ?? 5000);
+    await app.listen(process.env.HOST_PORT || 6000);
+    console.log('Application is running on port:', process.env.HOST_PORT || 6000);
+    console.log('Database Host:', process.env.DB_HOST);
+    console.log('Database Port:', process.env.DB_PORT);
+    console.log('Database User:', process.env.POSTGRES_USER);
+    console.log('Database Name:', process.env.POSTGRES_DB);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

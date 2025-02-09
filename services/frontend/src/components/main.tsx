@@ -31,10 +31,10 @@ export default function MainScreen() {
             try {
                 const data = await fetchCountriesData(); // Получаем данные через API
                 console.log(data);
-                // Корректное обновление данных в зависимости от `countries`
+                // Корректное обновление данных в зависимости от `frontend`
                 setRows(countries ? groupByCountry(data[0]) : groupByCurrency(data[0]));
 
-                if(!data[1]) {
+                if(data[1] !== null) {
                     setSelected(data[1]?.data)
                 }
 

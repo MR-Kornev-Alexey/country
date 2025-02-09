@@ -1,18 +1,18 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import * as dotenv from 'dotenv';
-
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: '*', // Разрешает запросы с любого домена (можно заменить на конкретный)
+    origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type, Accept',
   });
-
-  dotenv.config();
-  await app.listen(process.env.PORT ?? 5000);
-  console.log("port:", process.env.PORT ?? 5000 )
+  await app.listen(process.env.HOST_PORT || 5000);
+  console.log('Application is running on port:', process.env.HOST_PORT || 5000);
+  console.log('Database Host:', process.env.DB_HOST);
+  console.log('Database Port:', process.env.DB_PORT);
+  console.log('Database User:', process.env.POSTGRES_USER);
+  console.log('Database Name:', process.env.POSTGRES_DB);
 }
 bootstrap();
