@@ -1,17 +1,17 @@
-import styles from "../css/page.module.css";
+'use client'
 import React from "react";
-import MainScreen from "@/components/main";
+import dynamic from 'next/dynamic'
+import {Container} from "@mui/material";
+
+const Footer = dynamic(() => import('../components/footer'), { ssr: false })
+const MainScreen = dynamic(() => import('../components/main'), { ssr: false })
 
 export default function Home() {
 
     return (
-    <div>
+    <Container maxWidth="md">
       <MainScreen />
-      <footer className={styles.footer}>
-           <div>
-             Designed by <a href="mailto:alex@mrk.digtal"> Kornev Alexey</a>
-           </div>
-      </footer>
-    </div>
+      <Footer/>
+    </Container>
   );
 }

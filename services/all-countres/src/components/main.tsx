@@ -36,13 +36,9 @@ export default function MainScreen() {
 
                 if(!data[1]) {
                     setSelected(data[1]?.data)
-                } else {
-                    setSelected([])
                 }
 
             } catch (error) {
-                setRows(null);
-                setSelected([])
                 console.log(error)
             }
         };
@@ -96,9 +92,7 @@ export default function MainScreen() {
 
     return (
         <Stack>
-            <Box>
 
-            </Box>
             <Box sx={{marginY: 4, marginX: "auto"}}>
                 <Typography variant="h3" sx={{textAlign: "center", textTransform: "uppercase"}}>
                     Страны и валюты
@@ -106,7 +100,7 @@ export default function MainScreen() {
             </Box>
             {rows && Object.keys(rows).length > 0 ? (
                 <Stack>
-                    <Stack direction="row" sx={{marginLeft: 2}}>
+                     <Stack direction="row" sx={{marginLeft: 2}}>
                         <Button sx={{width: 260, backgroundColor:"#87cdf3" , color:"#121a1e"}} size="medium" variant="contained" onClick={toggleStatus}>
                             <Typography>
                                 {countries ? "Страна + Валюты" : "Валюта + Страны"}
@@ -120,7 +114,6 @@ export default function MainScreen() {
             ) : (
                 <Stack>
                     <Typography sx={{my:4}}>Загрузка...</Typography>
-                    aaa  {JSON.stringify(rows)}
                     <Button sx={{width: 260, backgroundColor:"#87cdf3" , color:"#121a1e" }} size="medium" variant="contained" onClick={() => firstDownload()}>
                         <Typography>
                             Загрузить
