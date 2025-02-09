@@ -8,7 +8,7 @@ RUN corepack enable && corepack prepare yarn@4.5.1 --activate
 WORKDIR /app
 
 # Копируем файлы зависимостей
-COPY package.json yarn.lock ./
+COPY package.json  ./
 
 # Устанавливаем зависимости
 RUN yarn install --frozen-lockfile

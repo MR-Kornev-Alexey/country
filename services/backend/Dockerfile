@@ -3,7 +3,7 @@ FROM node:22 AS builder
 WORKDIR /app
 
 # Копируем package.json и yarn.lock
-COPY package.json yarn.lock ./
+COPY package.json  ./
 
 # Устанавливаем зависимости
 RUN yarn install
