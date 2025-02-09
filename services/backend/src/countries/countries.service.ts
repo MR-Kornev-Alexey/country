@@ -23,7 +23,6 @@ export class CountryService {
   async getAllData(): Promise<AllDataResponse> {
     const countries = await this.countryRepository.find();
     const selected = await this.selectRepository.findOne({ where: { id: 1 } });
-
     return [countries, selected]; // Возвращаем массив с двумя элементами
   }
 

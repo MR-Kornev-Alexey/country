@@ -2,7 +2,7 @@ import {CurrencyInfo} from "@/types/types";
 
 export const handleSendToApiBackend =  async (selected: CurrencyInfo[]) => {
     try {
-        const response = await fetch("http://backend:5000/countries/save", {
+        const response = await fetch("http://95.163.230.243/api/countries/save", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -30,9 +30,8 @@ export const handleSendSelect = async (selectedCountries: string[]): Promise<voi
         data: selectedCountries,
         id: null,
     };
-
     try {
-        const response = await fetch('http://backend:5000/countries/select', {
+        const response = await fetch('http://95.163.230.243/api/countries/select', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json', // Указываем, что отправляем data
@@ -54,7 +53,7 @@ export const handleSendSelect = async (selectedCountries: string[]): Promise<voi
 
 export const fetchCountriesData = async () => {
     try {
-        const response = await fetch("http://backend:5000/countries");
+        const response = await fetch("http://95.163.230.243/api/countries");
         if (!response.ok) console.log("Ошибка загрузки data");
         return await response.json();
     } catch (error) {

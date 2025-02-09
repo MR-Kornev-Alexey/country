@@ -10,6 +10,7 @@ export class CountriesController {
     @Get()
     @HttpCode(200)
     getAll() {
+        console.log("countries")
         return this.countryService.getAllData()
     }
 
