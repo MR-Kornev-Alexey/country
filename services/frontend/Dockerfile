@@ -11,7 +11,7 @@ WORKDIR /app
 COPY package.json  ./
 
 # Устанавливаем зависимости
-RUN yarn install
+RUN npm install --legacy-peer-deps
 
 # Копируем исходный код
 COPY . .
