@@ -11,7 +11,7 @@ WORKDIR /app
 COPY package.json  ./
 
 # Устанавливаем зависимости
-RUN yarn install --immutable
+RUN yarn install
 
 # Копируем исходный код
 COPY . .
