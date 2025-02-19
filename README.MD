@@ -9,5 +9,8 @@ Install dependencies for all services
 ```bash
   yarn prepare
 ```
+
+## Example
+
 http://daido.fvds.ru/
 
